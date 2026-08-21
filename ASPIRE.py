@@ -11,6 +11,7 @@ import cv2
 import json
 import base64
 import pywhatkit
+from dotenv import load_dotenv
 from email.message import EmailMessage
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -18,7 +19,11 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from groq import Groq
 from datetime import datetime, timezone, timedelta
-GROQ_API_KEY=""
+
+load_dotenv()
+
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 client = Groq(api_key=GROQ_API_KEY)
 MODEL_NAME = "qwen/qwen3.6-27b"
 
@@ -294,7 +299,7 @@ class AssistantApp:
         # Initialize Google Clients
         self.gmail_client = GmailIntegration()
         self.calendar_client = CalendarIntegration(self.gmail_client.creds)
-        self.news_client = NewsIntegration(api_key="1aa4ea55895541b88830aefead86af52")
+        self.news_client = NewsIntegration(api_key=NEWS_API_KEY)
         
         # 1. INITIALIZE CLOUD CONNECTION
         print(f"[System]: Authenticating with Groq Cloud ({MODEL_NAME})...")
