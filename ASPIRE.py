@@ -294,7 +294,7 @@ class AssistantApp:
         # Initialize Google Clients
         self.gmail_client = GmailIntegration()
         self.calendar_client = CalendarIntegration(self.gmail_client.creds)
-        self.news_client = NewsIntegration(api_key="1aa4ea55895541b88830aefead86af52")
+        self.news_client = NewsIntegration(api_key="")
         
         # 1. INITIALIZE CLOUD CONNECTION
         print(f"[System]: Authenticating with Groq Cloud ({MODEL_NAME})...")
