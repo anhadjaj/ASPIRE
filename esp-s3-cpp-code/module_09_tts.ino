@@ -15,7 +15,7 @@ void playAudioTTS(
   }
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[System]: Streaming TTS audio from Groq..."
   );
 
@@ -35,7 +35,7 @@ void playAudioTTS(
     )
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Failed to initialize TTS connection"
     );
 
@@ -65,7 +65,7 @@ void playAudioTTS(
 
   if (!escapedText) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: TTS memory allocation failed"
     );
 
@@ -121,7 +121,7 @@ void playAudioTTS(
       44
     ) {
 
-      LOG_PRINTLN(
+      LOG_ERROR_PRINTLN(
         "[Error]: Invalid TTS WAV header"
       );
 
@@ -154,7 +154,7 @@ void playAudioTTS(
       )
     ) {
 
-      LOG_PRINTLN(
+      LOG_ERROR_PRINTLN(
         "[Error]: Failed to start I2S speaker mode"
       );
 
@@ -256,7 +256,7 @@ void playAudioTTS(
     }
 
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Audio playback complete."
     );
 
@@ -279,20 +279,20 @@ void playAudioTTS(
       )
     ) {
 
-      LOG_PRINTLN(
+      LOG_ERROR_PRINTLN(
         "[Error]: Failed to restore microphone mode"
       );
     }
 
   } else {
 
-    LOG_PRINTF(
+    LOG_ERROR_PRINTF(
       "[Error]: TTS HTTP failed with code %d\n",
       httpCode
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       https.getString()
     );
   }

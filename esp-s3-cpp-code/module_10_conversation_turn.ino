@@ -18,7 +18,7 @@ void conversationTurn() {
     rec.timedOut
   ) {
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Idle timeout - going back to sleep."
     );
 
@@ -38,7 +38,7 @@ void conversationTurn() {
     !rec.wav
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Recording failed."
     );
 
@@ -60,7 +60,7 @@ void conversationTurn() {
   }
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[System]: Transcribing..."
   );
 
@@ -82,7 +82,7 @@ void conversationTurn() {
     0
   ) {
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Didn't catch that."
     );
 
@@ -99,12 +99,12 @@ void conversationTurn() {
   }
 
 
-  LOG_PRINT(
+  LOG_INFO_PRINT(
     "[You]: "
   );
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     question
   );
 
@@ -131,7 +131,7 @@ void conversationTurn() {
       true;
 
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Vision mode ON."
     );
 
@@ -168,7 +168,7 @@ void conversationTurn() {
       false;
 
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Vision mode OFF."
     );
 
@@ -211,7 +211,7 @@ void conversationTurn() {
       0
   ) {
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Going offline."
     );
 
@@ -247,7 +247,7 @@ void conversationTurn() {
     fb
   ) {
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Asking Groq (vision)..."
     );
 
@@ -274,7 +274,7 @@ void conversationTurn() {
     }
 
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Asking Groq (text)..."
     );
 
@@ -286,7 +286,7 @@ void conversationTurn() {
   }
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[Assistant]:"
   );
 
@@ -296,7 +296,7 @@ void conversationTurn() {
     0
   ) {
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       answer
     );
 
@@ -307,7 +307,7 @@ void conversationTurn() {
 
   } else {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "(no response)"
     );
   }

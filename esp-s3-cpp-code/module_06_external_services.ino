@@ -116,7 +116,7 @@ String getTopNews(
 
     } else {
 
-      LOG_PRINTF(
+      LOG_ERROR_PRINTF(
         "[Error]: News JSON parse: %s\n",
         err.c_str()
       );
@@ -124,13 +124,13 @@ String getTopNews(
 
   } else {
 
-    LOG_PRINTF(
+    LOG_ERROR_PRINTF(
       "[Error]: NewsAPI HTTP %d\n",
       httpCode
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       https.getString()
     );
 
@@ -399,7 +399,7 @@ String takePhotoAndSendToPhone() {
   }
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[System]: Capturing photo for Telegram..."
   );
 
@@ -559,13 +559,13 @@ String takePhotoAndSendToPhone() {
 
   } else {
 
-    LOG_PRINTF(
+    LOG_ERROR_PRINTF(
       "[Error]: Telegram HTTP %d\n",
       httpCode
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       https.getString()
     );
 

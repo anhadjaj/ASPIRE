@@ -13,7 +13,7 @@ String transcribeWithGroq(
       WAV_HEADER_SIZE
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Invalid WAV buffer"
     );
 
@@ -26,7 +26,7 @@ String transcribeWithGroq(
     WL_CONNECTED
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: WiFi disconnected before STT"
     );
 
@@ -34,20 +34,20 @@ String transcribeWithGroq(
   }
 
 
-  LOG_PRINTLN();
+  LOG_DEBUG_PRINTLN();
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     "========== STT DEBUG =========="
   );
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[STT] WiFi status: %d\n",
     WiFi.status()
   );
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[STT] Local IP: %s\n",
     WiFi.localIP()
       .toString()
@@ -55,7 +55,7 @@ String transcribeWithGroq(
   );
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[STT] RSSI: %d dBm\n",
     WiFi.RSSI()
   );
@@ -66,7 +66,7 @@ String transcribeWithGroq(
   );
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[STT] WAV size: %u bytes\n",
     (unsigned)wavLen
   );
@@ -79,7 +79,7 @@ String transcribeWithGroq(
   IPAddress groqIP;
 
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     "[STT] Resolving api.groq.com..."
   );
 
@@ -91,7 +91,7 @@ String transcribeWithGroq(
     )
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: DNS lookup failed for api.groq.com"
     );
 
@@ -99,11 +99,11 @@ String transcribeWithGroq(
   }
 
 
-  LOG_PRINT(
+  LOG_DEBUG_PRINT(
     "[STT] api.groq.com resolved to: "
   );
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     groqIP
   );
 
@@ -122,7 +122,7 @@ String transcribeWithGroq(
   );
 
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     "[STT] Starting TLS connection to api.groq.com:443..."
   );
 
@@ -138,7 +138,7 @@ String transcribeWithGroq(
     )
   ) {
 
-    LOG_PRINTF(
+    LOG_ERROR_PRINTF(
       "[Error]: Secure client connection failed after %lu ms\n",
       millis() -
       tlsStart
@@ -154,7 +154,7 @@ String transcribeWithGroq(
   }
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[STT] TLS connection SUCCESS in %lu ms\n",
     millis() -
     tlsStart
@@ -205,7 +205,7 @@ String transcribeWithGroq(
     postFile.length();
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[STT] HTTP multipart body: %u bytes\n",
     (unsigned)totalLen
   );
@@ -287,7 +287,7 @@ String transcribeWithGroq(
     )
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Failed sending multipart prefix"
     );
 
@@ -302,7 +302,7 @@ String transcribeWithGroq(
   // SEND WAV FROM PSRAM
   // ----------------------------------------------------------
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     "[STT] Uploading WAV from PSRAM..."
   );
 
@@ -361,7 +361,7 @@ String transcribeWithGroq(
         !client.connected()
       ) {
 
-        LOG_PRINTF(
+        LOG_ERROR_PRINTF(
           "[Error]: TLS connection closed at %u/%u bytes\n",
           (unsigned)(
             sent +
@@ -417,7 +417,7 @@ String transcribeWithGroq(
             0
         ) {
 
-          LOG_PRINTF(
+          LOG_DEBUG_PRINTF(
             "[STT] Write stalled at %u bytes, retry %d\n",
             (unsigned)(
               sent +
@@ -434,7 +434,7 @@ String transcribeWithGroq(
           WRITE_STALL_TIMEOUT_MS
         ) {
 
-          LOG_PRINTF(
+          LOG_ERROR_PRINTF(
             "[Error]: STT upload stalled at %u/%u bytes\n",
             (unsigned)(
               sent +
@@ -475,7 +475,7 @@ String transcribeWithGroq(
       CHUNK_SIZE
     ) {
 
-      LOG_PRINTF(
+      LOG_DEBUG_PRINTF(
         "[STT] Uploaded %u/%u bytes\n",
         (unsigned)sent,
         (unsigned)wavLen
@@ -484,7 +484,7 @@ String transcribeWithGroq(
   }
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[STT] WAV upload complete: %u bytes in %lu ms\n",
     (unsigned)sent,
     millis() -
@@ -504,7 +504,7 @@ String transcribeWithGroq(
     )
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Failed sending multipart ending"
     );
 
@@ -519,7 +519,7 @@ String transcribeWithGroq(
   // WAIT FOR RESPONSE
   // ----------------------------------------------------------
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     "[STT] Waiting for Groq response..."
   );
 
@@ -553,7 +553,7 @@ String transcribeWithGroq(
     !client.available()
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: STT response timeout"
     );
 
@@ -577,11 +577,11 @@ String transcribeWithGroq(
   statusLine.trim();
 
 
-  LOG_PRINT(
+  LOG_DEBUG_PRINT(
     "[STT] HTTP status: "
   );
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     statusLine
   );
 
@@ -643,7 +643,7 @@ String transcribeWithGroq(
   }
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[STT] Response content length: %d\n",
     contentLength
   );
@@ -741,7 +741,7 @@ String transcribeWithGroq(
   client.stop();
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[STT] Response body: %u bytes\n",
     payload.length()
   );
@@ -758,12 +758,12 @@ String transcribeWithGroq(
     0
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Groq STT request failed"
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       payload
     );
 
@@ -788,22 +788,22 @@ String transcribeWithGroq(
 
   if (err) {
 
-    LOG_PRINT(
+    LOG_ERROR_PRINT(
       "[Error]: STT JSON parse failed: "
     );
 
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       err.c_str()
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       "[STT] Raw response:"
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       payload
     );
 
@@ -822,12 +822,12 @@ String transcribeWithGroq(
   result.trim();
 
 
-  LOG_PRINT(
+  LOG_DEBUG_PRINT(
     "[STT] Transcript: "
   );
 
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     result
   );
 
@@ -837,12 +837,12 @@ String transcribeWithGroq(
   );
 
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     "========== STT END =========="
   );
 
 
-  LOG_PRINTLN();
+  LOG_DEBUG_PRINTLN();
 
 
   return result;
@@ -864,7 +864,7 @@ bool listenForWakeWord() {
 
   if (!block) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Malloc failed in wake listener"
     );
 
@@ -896,7 +896,7 @@ bool listenForWakeWord() {
   }
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[WAKE] Sound detected. RMS: %.2f\n",
     rms
   );
@@ -935,7 +935,7 @@ bool listenForWakeWord() {
 
   if (!buf) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Wake-word PSRAM allocation failed"
     );
 
@@ -996,11 +996,11 @@ bool listenForWakeWord() {
   transcript.toLowerCase();
 
 
-  LOG_PRINT(
+  LOG_DEBUG_PRINT(
     "[WAKE] Transcript: "
   );
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     transcript
   );
 

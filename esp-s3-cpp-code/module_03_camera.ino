@@ -125,7 +125,7 @@ bool initCamera() {
   }
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[CAM] Initializing camera..."
   );
 
@@ -146,7 +146,7 @@ bool initCamera() {
     ESP_OK
   ) {
 
-    LOG_PRINTF(
+    LOG_ERROR_PRINTF(
       "[Error]: Camera init failed: 0x%x\n",
       err
     );
@@ -156,7 +156,7 @@ bool initCamera() {
   }
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[CAM] Camera initialized successfully."
   );
 
@@ -172,7 +172,7 @@ bool initCamera() {
 
 camera_fb_t* captureHighResFrame() {
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[System]: Capturing image..."
   );
 
@@ -183,7 +183,7 @@ camera_fb_t* captureHighResFrame() {
 
   if (!fb) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Camera capture failed"
     );
 
@@ -192,7 +192,7 @@ camera_fb_t* captureHighResFrame() {
   }
 
 
-  LOG_PRINTF(
+  LOG_INFO_PRINTF(
     "[System]: Captured %dx%d, %u bytes\n",
     fb->width,
     fb->height,

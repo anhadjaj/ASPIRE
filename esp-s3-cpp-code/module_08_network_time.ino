@@ -4,7 +4,7 @@
 
 void connectWiFi() {
 
-  LOG_PRINT(
+  LOG_INFO_PRINT(
     "[System]: Initializing WiFi..."
   );
 
@@ -66,7 +66,7 @@ void connectWiFi() {
     delay(300);
 
 
-    LOG_PRINT(".");
+    LOG_DEBUG_PRINT(".");
   }
 
 
@@ -75,7 +75,7 @@ void connectWiFi() {
     WL_CONNECTED
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "\n[Error]: WiFi connection timed out. Restarting board..."
     );
 
@@ -99,22 +99,22 @@ void connectWiFi() {
   );
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     " connected!"
   );
 
 
-  LOG_PRINT(
+  LOG_DEBUG_PRINT(
     "[WiFi] IP: "
   );
 
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     WiFi.localIP()
   );
 
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[WiFi] RSSI: %d dBm\n",
     WiFi.RSSI()
   );
@@ -143,7 +143,7 @@ void syncTime() {
   );
 
 
-  LOG_PRINT(
+  LOG_INFO_PRINT(
     "[System]: Syncing time"
   );
 
@@ -195,7 +195,7 @@ void syncTime() {
       !ledState;
 
 
-    LOG_PRINT(".");
+    LOG_DEBUG_PRINT(".");
 
 
     delay(400);
@@ -210,13 +210,13 @@ void syncTime() {
 
   if (!synced) {
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "\n[Warning]: Time sync timed out."
     );
 
   } else {
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       " synced!"
     );
 
@@ -232,12 +232,12 @@ void syncTime() {
     );
 
 
-    LOG_PRINT(
+    LOG_DEBUG_PRINT(
       "[TIME] Current time: "
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       timeString
     );
   }

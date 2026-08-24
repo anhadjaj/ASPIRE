@@ -20,7 +20,7 @@ String getValidGoogleAccessToken() {
   }
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[System]: Google Access Token expired or missing. Fetching new token..."
   );
 
@@ -40,7 +40,7 @@ String getValidGoogleAccessToken() {
     )
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Failed to connect to Google OAuth server."
     );
 
@@ -129,13 +129,13 @@ String getValidGoogleAccessToken() {
         );
 
 
-      LOG_PRINTLN(
+      LOG_INFO_PRINTLN(
         "[System]: Google Access Token refreshed successfully."
       );
 
     } else {
 
-      LOG_PRINTF(
+      LOG_ERROR_PRINTF(
         "[Error]: Token JSON parse failed: %s\n",
         err.c_str()
       );
@@ -143,13 +143,13 @@ String getValidGoogleAccessToken() {
 
   } else {
 
-    LOG_PRINTF(
+    LOG_ERROR_PRINTF(
       "[Error]: Token fetch failed HTTP %d\n",
       httpCode
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       https.getString()
     );
   }
@@ -471,7 +471,7 @@ String createCalendarEvent(
       ").";
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       https.getString()
     );
   }
@@ -888,12 +888,12 @@ String sendEmail(
       ").";
 
 
-    LOG_PRINT(
-      "[Error]: Gmail send failed: "
+    LOG_ERROR_PRINTLN(
+      "[Error]: Gmail send failed."
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       https.getString()
     );
   }

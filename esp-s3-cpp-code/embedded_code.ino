@@ -11,13 +11,26 @@
 // LOGGING CONFIG
 // ============================================================
 
-// Set to false to disable all Serial logging.
-const bool ENABLE_LOGS = true;
+enum LogLevel : uint8_t {
+  LOG_LEVEL_NONE = 0,
+  LOG_LEVEL_ERROR,
+  LOG_LEVEL_INFO,
+  LOG_LEVEL_DEBUG
+};
 
-#define LOG_BEGIN(...)   do { if (ENABLE_LOGS) Serial.begin(__VA_ARGS__); } while (false)
-#define LOG_PRINT(...)   do { if (ENABLE_LOGS) Serial.print(__VA_ARGS__); } while (false)
-#define LOG_PRINTLN(...) do { if (ENABLE_LOGS) Serial.println(__VA_ARGS__); } while (false)
-#define LOG_PRINTF(...)  do { if (ENABLE_LOGS) Serial.printf(__VA_ARGS__); } while (false)
+// INFO keeps important status and error messages without verbose diagnostics.
+const LogLevel ACTIVE_LOG_LEVEL = LOG_LEVEL_INFO;
+
+#define LOG_BEGIN(...)         do { if (ACTIVE_LOG_LEVEL != LOG_LEVEL_NONE) Serial.begin(__VA_ARGS__); } while (false)
+#define LOG_ERROR_PRINT(...)   do { if (ACTIVE_LOG_LEVEL >= LOG_LEVEL_ERROR) Serial.print(__VA_ARGS__); } while (false)
+#define LOG_ERROR_PRINTLN(...) do { if (ACTIVE_LOG_LEVEL >= LOG_LEVEL_ERROR) Serial.println(__VA_ARGS__); } while (false)
+#define LOG_ERROR_PRINTF(...)  do { if (ACTIVE_LOG_LEVEL >= LOG_LEVEL_ERROR) Serial.printf(__VA_ARGS__); } while (false)
+#define LOG_INFO_PRINT(...)    do { if (ACTIVE_LOG_LEVEL >= LOG_LEVEL_INFO) Serial.print(__VA_ARGS__); } while (false)
+#define LOG_INFO_PRINTLN(...)  do { if (ACTIVE_LOG_LEVEL >= LOG_LEVEL_INFO) Serial.println(__VA_ARGS__); } while (false)
+#define LOG_INFO_PRINTF(...)   do { if (ACTIVE_LOG_LEVEL >= LOG_LEVEL_INFO) Serial.printf(__VA_ARGS__); } while (false)
+#define LOG_DEBUG_PRINT(...)   do { if (ACTIVE_LOG_LEVEL >= LOG_LEVEL_DEBUG) Serial.print(__VA_ARGS__); } while (false)
+#define LOG_DEBUG_PRINTLN(...) do { if (ACTIVE_LOG_LEVEL >= LOG_LEVEL_DEBUG) Serial.println(__VA_ARGS__); } while (false)
+#define LOG_DEBUG_PRINTF(...)  do { if (ACTIVE_LOG_LEVEL >= LOG_LEVEL_DEBUG) Serial.printf(__VA_ARGS__); } while (false)
 
 // ============================================================
 // LED
@@ -252,17 +265,17 @@ void setup() {
   delay(300);
 
 
-  LOG_PRINTLN();
+  LOG_DEBUG_PRINTLN();
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     "======================================"
   );
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "         VIPER INITIALIZING"
   );
 
-  LOG_PRINTLN(
+  LOG_DEBUG_PRINTLN(
     "======================================"
   );
 
@@ -276,7 +289,7 @@ void setup() {
   // MICROPHONE
   // ----------------------------------------------------------
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[System]: Initializing microphone..."
   );
 
@@ -296,7 +309,7 @@ void setup() {
     )
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Failed to initialize I2S mic!"
     );
 
@@ -308,7 +321,7 @@ void setup() {
   }
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[System]: Microphone initialized."
   );
 
@@ -326,7 +339,7 @@ void setup() {
     !initCamera()
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Camera unavailable - vision mode will fail."
     );
   }
@@ -358,7 +371,7 @@ void setup() {
   );
 
 
-  LOG_PRINTLN(
+  LOG_INFO_PRINTLN(
     "[System]: Ready. Say \"viper\" to start a conversation."
   );
 }
@@ -394,7 +407,7 @@ void loop() {
         justEnteredWaiting
       ) {
 
-        LOG_PRINTLN(
+        LOG_INFO_PRINTLN(
           "[System]: Listening for wake word..."
         );
 
@@ -408,7 +421,7 @@ void loop() {
         listenForWakeWord()
       ) {
 
-        LOG_PRINTLN(
+        LOG_INFO_PRINTLN(
           "[System]: >>> Wake word detected <<<"
         );
 

@@ -4,13 +4,13 @@
 
 void printMemoryDebug(const char* tag) {
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[MEM][%s] Free heap: %u bytes\n",
     tag,
     ESP.getFreeHeap()
   );
 
-  LOG_PRINTF(
+  LOG_DEBUG_PRINTF(
     "[MEM][%s] Min free heap: %u bytes\n",
     tag,
     ESP.getMinFreeHeap()
@@ -18,13 +18,13 @@ void printMemoryDebug(const char* tag) {
 
   if (psramFound()) {
 
-    LOG_PRINTF(
+    LOG_DEBUG_PRINTF(
       "[MEM][%s] PSRAM total: %u bytes\n",
       tag,
       ESP.getPsramSize()
     );
 
-    LOG_PRINTF(
+    LOG_DEBUG_PRINTF(
       "[MEM][%s] PSRAM free: %u bytes\n",
       tag,
       ESP.getFreePsram()
@@ -32,7 +32,7 @@ void printMemoryDebug(const char* tag) {
 
   } else {
 
-    LOG_PRINTF(
+    LOG_DEBUG_PRINTF(
       "[MEM][%s] PSRAM NOT FOUND\n",
       tag
     );
@@ -270,7 +270,7 @@ RecordResult recordUntilSilence() {
 
   if (!buf) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: PSRAM alloc failed for recording buffer"
     );
 
@@ -305,7 +305,7 @@ RecordResult recordUntilSilence() {
     !prevBlock2
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Malloc failed for audio blocks"
     );
 
@@ -347,13 +347,13 @@ RecordResult recordUntilSilence() {
 
   if (visionMode) {
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Listening... (VISION ACTIVE)"
     );
 
   } else {
 
-    LOG_PRINTLN(
+    LOG_INFO_PRINTLN(
       "[System]: Listening..."
     );
   }

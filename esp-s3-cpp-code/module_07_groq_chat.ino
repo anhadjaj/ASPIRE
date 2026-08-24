@@ -286,13 +286,13 @@ String sendTextChat(
     HTTP_CODE_OK
   ) {
 
-    LOG_PRINTF(
+    LOG_ERROR_PRINTF(
       "[Error]: Groq Phase 1 HTTP %d\n",
       code
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       payload
     );
 
@@ -317,12 +317,12 @@ String sendTextChat(
 
   if (respErr) {
 
-    LOG_PRINT(
+    LOG_ERROR_PRINT(
       "[Error]: Groq response JSON parse: "
     );
 
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       respErr.c_str()
     );
 
@@ -499,7 +499,7 @@ String sendTextChat(
         "get_unread_emails"
       ) {
 
-        LOG_PRINTLN(
+        LOG_INFO_PRINTLN(
           "[System]: Executing tool -> get_unread_emails"
         );
 
@@ -515,7 +515,7 @@ String sendTextChat(
         "send_email"
       ) {
 
-        LOG_PRINTLN(
+        LOG_INFO_PRINTLN(
           "[System]: Executing tool -> send_email"
         );
 
@@ -543,7 +543,7 @@ String sendTextChat(
         "get_upcoming_events"
       ) {
 
-        LOG_PRINTLN(
+        LOG_INFO_PRINTLN(
           "[System]: Executing tool -> get_upcoming_events"
         );
 
@@ -559,7 +559,7 @@ String sendTextChat(
         "create_event"
       ) {
 
-        LOG_PRINTLN(
+        LOG_INFO_PRINTLN(
           "[System]: Executing tool -> create_event"
         );
 
@@ -587,7 +587,7 @@ String sendTextChat(
         "search_drive"
       ) {
 
-        LOG_PRINTLN(
+        LOG_INFO_PRINTLN(
           "[System]: Executing tool -> search_drive"
         );
 
@@ -605,7 +605,7 @@ String sendTextChat(
         "get_news"
       ) {
 
-        LOG_PRINTLN(
+        LOG_INFO_PRINTLN(
           "[System]: Executing tool -> get_news"
         );
 
@@ -623,7 +623,7 @@ String sendTextChat(
         "take_photo"
       ) {
 
-        LOG_PRINTLN(
+        LOG_INFO_PRINTLN(
           "[System]: Executing tool -> take_photo"
         );
 
@@ -742,13 +742,13 @@ String sendTextChat(
 
     } else {
 
-      LOG_PRINTF(
+      LOG_ERROR_PRINTF(
         "[Error]: Groq Phase 2 HTTP %d\n",
         p2Code
       );
 
 
-      LOG_PRINTLN(
+      LOG_DEBUG_PRINTLN(
         https2.getString()
       );
     }
@@ -800,7 +800,7 @@ String sendVisionChat(
     0
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Invalid image buffer"
     );
 
@@ -823,7 +823,7 @@ String sendVisionChat(
 
   if (!b64) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: base64 encode failed"
     );
 
@@ -849,7 +849,7 @@ String sendVisionChat(
     !qEsc
   ) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: Vision JSON escaping allocation failed"
     );
 
@@ -886,7 +886,7 @@ String sendVisionChat(
 
   if (!bodyBuf) {
 
-    LOG_PRINTLN(
+    LOG_ERROR_PRINTLN(
       "[Error]: PSRAM alloc failed for vision body"
     );
 
@@ -1076,25 +1076,25 @@ String sendVisionChat(
 
     } else {
 
-      LOG_PRINT(
+      LOG_ERROR_PRINT(
         "[Error]: Vision JSON parse: "
       );
 
 
-      LOG_PRINTLN(
+      LOG_ERROR_PRINTLN(
         err.c_str()
       );
     }
 
   } else {
 
-    LOG_PRINTF(
+    LOG_ERROR_PRINTF(
       "[Error]: Groq vision HTTP %d\n",
       code
     );
 
 
-    LOG_PRINTLN(
+    LOG_DEBUG_PRINTLN(
       https.getString()
     );
   }
